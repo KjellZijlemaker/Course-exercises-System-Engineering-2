@@ -1,3 +1,8 @@
+/* 
+* Author: Kjell Zijlemaker
+* Version: 1.2
+* Date: 6-9-2014
+*/
 
 public class lab1 {
 
