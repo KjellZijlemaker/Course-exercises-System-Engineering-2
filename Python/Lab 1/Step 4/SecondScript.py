@@ -1,5 +1,11 @@
 #! /usr/bin/python
 
+""" 
+* Author: Kjell Zijlemaker
+* Version: 1.2
+* Date: 6-9-2014
+"""
+
 # Class for instantiating the SecondScript, without calling subprocesses
 class SecondScript:
 

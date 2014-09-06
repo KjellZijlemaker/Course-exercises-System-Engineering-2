@@ -1,6 +1,12 @@
 #!/usr/bin/python
 import threading
 
+""" 
+* Author: Kjell Zijlemaker
+* Version: 1.2
+* Date: 6-9-2014
+"""
+
 def main():
 
 	# For loop for the work pool

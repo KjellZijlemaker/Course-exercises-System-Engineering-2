@@ -1,3 +1,9 @@
+/* 
+* Author: Kjell Zijlemaker
+* Version: 1.2
+* Date: 6-9-2014
+*/
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 
