@@ -24,3 +24,13 @@ This repo includes all exersizes from System Engineering 2
 - Referenties en pointers wijzen naar een stuk geheugen
 - Het verschil tussen een referentie en een pointer is dat een pointer van geheugen kan veranderen, meer eigenlijk niet
 - Je kan met referenties en pointers combineren, bijvoorbeeld in een functie
+- Met enums is het mogelijk om getallen om te zetten naar letters, zodat deze gemakkelijk te lezen zijn in functies. Bijvoorbeeld:
+
+````
+// Geeft enum LOLLIKLOP met een waarde 1, maar is gemmakelijker te lezen voor een programmeur.
+enum TestCase {LOLLIEPOP, LOLLIKLOP};
+
+if(eten == LOLLIKLOP){
+  Doe iets
+}
+```
