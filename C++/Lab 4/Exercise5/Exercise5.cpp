@@ -1,15 +1,15 @@
 // Lab4.cpp : Defines the entry point for the console application.
-//
+// http://cs.uah.edu/~rcoleman/CS307/SelectedTopics/FileIO.html
 
 #include "stdafx.h"
 #include <fstream>
 #include <iostream>
 #include <cstring>
+#include <string>
 
 // Declaring methods..
-void createProcesses();
 void printProcesses();
-void writeBinaryFile(int &process, int &length, char *created, char *modified, int &number);
+void writeBinaryFile(int process[4][5]);
 
 using namespace std;
 
@@ -17,8 +17,8 @@ using namespace std;
 struct str_process{
 	int process_id;
 	int length;
-	char *created;
-	char *modified;
+	char* created;
+	char* modified;
 	str_process *next;
 };
 
@@ -42,7 +42,7 @@ str_process* getNewProcess(){
 
 int main()
 {
-	
+
 	// Making the structures
 	str_process* n1 = getNewProcess();
 	n1->process_id = 12;
@@ -63,7 +63,7 @@ int main()
 	n3->modified = "09092011";
 
 	// Declaring array
-	int newProcess[4][5];
+	char newProcess[4][5];
 
 
 	// Setting data
@@ -76,19 +76,43 @@ int main()
 	newProcess[2][2] = n2->length;
 	newProcess[2][3] = atoi(n2->created);
 	newProcess[2][4] = atoi(n2->modified);
-	
+
 	newProcess[3][1] = n3->process_id;
 	newProcess[3][2] = n3->length;
 	newProcess[3][3] = atoi(n3->created);
 	newProcess[3][4] = atoi(n3->modified);
-	
+
+	// Opening new file
+	ofstream newFile("Result.bin", ios::out | ios::binary);
+	cout << "Beginning writing binary file...\n";
 
 	// Printing data
 	for (int i = 1; i <= 3; i++){
-		for (int j = 0; j <= 4; j++){
-			cout << newProcess[i][j] << "\n";
+		
+		newFile << "\n";
+		newFile << "process ID: " << newProcess[i][1] << "\n";
+		newFile << "Length: " << newProcess[i][2] << "\n";
+		newFile << "Created: " << newProcess[i][3] << "\n";
+		newFile << "Modified: " << newProcess[i][4] << "\n";
+	}
+	newFile.close();
+	cout << "\nFinished!\n";
+
+
+	// Opening reading file
+	ifstream readFile("Result.bin", ios::out, ios::binary);
+	string line;
+	
+	// Begin reading
+	if (readFile.is_open()){
+		cout << "\nBeginning reading from file...\n";
+		while (getline(readFile, line)){
+			cout << line << "\n";
 		}
+		readFile.close();
+		cout << "\nDone reading from file!";
 	}
 
 	return 0;
 }
+
