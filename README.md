@@ -18,3 +18,9 @@ This repo includes all exersizes from System Engineering 2
 #C++ weetjes
 
 - Je begint altijd met: using namespace: std
+- Met #inlcudes kun je verschillende modules toevoegen
+- Pointers maak je aan doormiddel met: int *kjell; en wijs je toe aan een andere int: *kjell = j;
+- Een referentie maak je aan doormiddel met: int &kjell; en wijs je toe met een andere int: &kjell = j;
+- Referenties en pointers wijzen naar een stuk geheugen
+- Het verschil tussen een referentie en een pointer is dat een pointer van geheugen kan veranderen, meer eigenlijk niet
+- Je kan met referenties en pointers combineren, bijvoorbeeld in een functie
