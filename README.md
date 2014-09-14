@@ -12,3 +12,9 @@ This repo includes all exersizes from System Engineering 2
 - In een klasse dien je altijd bij functions de (self) parameter mee te geven!!!
 - Aan het begin van elke script vul je: #! /usr/bin/python in!
 - Indien je een main functie hebt, roep deze aan doormiddel van: if__name__ == "__main__": main()
+
+
+
+#C++ weetjes
+
+- Je begint altijd met: using namespace: std
