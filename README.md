@@ -34,3 +34,15 @@ if(eten == LOLLIKLOP){
   Doe iets
 }
 ```
+
+#Interprocess networking communication facts
+
+- In higher level languages like Pyhon or Java, you don't need to do all the underlying functions for making a correct TCP/IP connection
+- You can use IPV4 and IPV6. Mostly you will use IPV4.
+  - You can use IPV4 with ````AF_INET````
+- You can make TCP connections for stream oriented (reliable) connections, or UDP for datagram (unreliable) data connections.
+  - For the TCP connections you mostly use: ```SOCK_STREAM```
+  - For UDP connections you mostly use: ````SOCK_DGRAM````
+- A server must always be in a unlimited while (or for) loop for connecting to other sockets
+- Servers can be code independent
+- Look in the book for more interesting facts
