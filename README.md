@@ -49,6 +49,7 @@ if(eten == LOLLIKLOP){
 
 
 # Special for Lab8
+## Good link for example code: http://ilab.cs.byu.edu/python/select/echoserver.html
 ## Clientpart
 - When created a socket with the code ````s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)```` u can use the reference s for connecting to the server ````s.connect()````
 - With the above code, you can also send the message with ````s.send()````
@@ -64,4 +65,11 @@ if(eten == LOLLIKLOP){
 - It’s important to give the connection inside the message queue a new queue for handling all the data. This is done like this: ````message_queues[connection] = Queue.Queue()````
 - Like the client, data needs to be received from the client with the recv method
 - Data needs to get into the message queue before moved to handle the output of course. Be careful with making the queues, it’s very important that messages, and output queues will be emptied when done
+- Code like underneath will take care that new clients will be accepted by the server. Also, the input array (from the select) will be appended with the client. When it will be called again, the response can been given. 
+````Python
+if s == server: 
+    # handle the server socket 
+    client, address = server.accept() 
+    input.append(client)
+````
 - Look at the server / client code for the code itself
