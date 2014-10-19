@@ -73,3 +73,152 @@ if s == server:
     input.append(client)
 ````
 - Look at the server / client code for the code itself
+
+
+#Lab 9 JAVA
+## Threads
+
+- You can make Threads with either extending the Thread class, or to implement Runnable.
+  - Mostly, implementing the Runnable is the most common
+  - When doing more complex stuff with more threads (pool for example), extending the Thread class is more useful
+- Starting a Thread is very different than starting Threads in Pyhthon.
+  - Starting a Thread with the Runnable interface: 
+    - ````
+      Runnable hello = new DisplayMessage("Hello");
+      Thread thread1 = new Thread(hello);
+      thread1.setDaemon(true);
+      thread1.setName("hello");
+      System.out.println("Starting hello thread...");
+      thread1.start(); ````
+  - Starting a Thread with extending the Thread class:
+    - ````
+      System.out.println("Starting thread3...");
+      Thread thread3 = new GuessANumber(27);
+      thread3.start();
+      `````
+
+## Mutual exclusion
+- In Java, you have the ````synchronized ```` keyword
+  - The keyword can be used with methods and blocks of code
+  - The object inside the keyword will serve as the monitor object and may not be used by another thread for execution, when already used
+
+
+## Semaphores
+- Java already implements Semaphores in the concurrent package, but you can make your own implementation
+- There are 3 kinds of Semaphores
+  - Simple Semaphore
+    - Thread can take and release the Semaphore, other Threads must wait when taken
+  - Counting Semaphore
+    - Thread can take and release the Semaphore, the Semaphore count will increment when taken for an indication of Threads that want to take the Semaphore
+  - Bounded Semaphore
+    - Most widely used for Threads that will take and release the Semaphore. Acts like the counting Semaphore, but will also have a boundary for how many Threads there can go into the critical section
+- Mostly, Semaphores will be used as Locks with bounded Semaphores. Below, an implemantation is given:
+````
+BoundedSemaphore semaphore = new BoundedSemaphore(1);
+
+...
+
+semaphore.take();
+
+try{
+  //critical section
+} finally {
+  semaphore.release();
+}
+````
+
+
+## Networking
+- In java, networking with sockets is fairly simple
+  - In the Java networking API, there is the Socket's and the ServerSocket's family to make connections through the network
+- TCP and UDP in Java exist
+  - TCP is a stream connection that is reliable
+  - UDP is a packet connection that is not reliable, but has less overhead then TCP
+    - UDP uses DatagramSocket's
+
+### Client
+- The client has to make use from the Socket's API
+- The init for the Socket will need the hostname (or IP) and the port where it will connect through
+- You have the inputstream for input
+````
+Socket socket = new Socket("jenkov.com", 80);
+InputStream in = socket.getInputStream();
+
+int data = in.read();
+//... read more data...
+
+in.close();
+socket.close();
+````
+- You have the outputStream for the ouput
+````
+Socket socket = new Socket("jenkov.com", 80);
+OutputStream out = socket.getOutputStream();
+
+out.write("some data".getBytes());
+out.flush();
+out.close();
+
+socket.close();
+````
+- You will first need to close the input or outputStream and then close the socket itself when done
+
+### Server
+- The server will make use from the ServerSocket's API
+- The init for the Socket will be the port on which it will run
+  - The port will be the listening port for incoming connections
+  - It will need to go through a while loop until it will have a connection
+- When connection has accourt, a new ClientSocket will be made and connected with the ServerSocket's connection, with the accept() method
+````
+ServerSocket serverSocket = new ServerSocket(9000);
+
+boolean isStopped = false;
+while(!isStopped){
+    Socket clientSocket = serverSocket.accept();
+
+    //do something with clientSocket
+}
+````
+- The clientSocket will need to close when done, with the clientSocket.close() method
+- At last the ServerSocket will need to close with the serverSocket.close() method, only when really shutting down the server!
+````
+clientSocket.close()
+serverSocket.close()
+````
+
+
+### UDP packets (harder than TCP)
+- The server does not know what it will receive and when it will receive
+- The client does not know what it will receive and when it will receive
+- UPD packets are connectionless and will have no confirmations
+- Sending UDP data from a server will be like this:
+````
+byte[] buffer = new byte[65508]; // Array for each packet (buffer)
+InetAddress address = InetAddress.getByName("jenkov.com"); // The address in bytes
+
+/**
+* The packet will consist of the buffer (packet), the length of the buffer, the address in bytes and the port it will need to 
+* be send through
+* /
+DatagramPacket packet = new DatagramPacket(
+    buffer, buffer.length, address, 9000);
+````
+- Receiving will be like this:
+````
+DatagramSocket datagramSocket = new DatagramSocket(80); // Making new socket on port 80 to listen on
+
+// Byte array for the receiving packets
+byte[] buffer = new byte[10];
+
+/**
+* The packet init for the DatagramPacket will now be the buffer and the length of the buffer
+*/
+DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
+
+// It will now receive the packet
+datagramSocket.receive(packet);
+
+// Data can get in the buffer for extracting data
+byte[] buffer = packet.getData();
+````
+- TCP and UDP port 80 for example, are not the same! When TCP is in use, the UDP version can still be used on the same port
